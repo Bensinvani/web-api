@@ -6,11 +6,12 @@ const {GetAllProducts, // ייבוא סלקטיבי של הפונקציות המ
     GetProductById,
     AddProduct,
     UpdateProduct,
-    DeleteProduct} = require('../controllers/product');
+    DeleteProduct,
+    RemoveProductById} = require('../controllers/product');
 router.get('/',GetAllProducts);
 router.post('/',AddProduct);
 router.get('/:id',GetProductById);
 router.patch('/:id',UpdateProduct);
-router.delete('/:id',DeleteProduct);
+router.delete('/:id',RemoveProductById);
 
 module.exports = router; // ייצוא של הראוטר

@@ -3,6 +3,7 @@ const mongoose = require('mongoose') ; // חיבור לספריית העבודה
 // נגדיר סכמה עבור מוצר
 const productSchema = new mongoose.Schema(
     {
+        pid:Number,
         pname:String,
         price:Number,
         picname:String
