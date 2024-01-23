@@ -1,21 +1,36 @@
+const product = require('../models/product'); // חיבור למודל של המוצרים
 module.exports = {
     GetAllProducts:(req,res)=>{ // הגדרת נקודת קצה עבור שליפה של כל המוצרים
-        
-        return res.status(200).json({msg:"All product"});
+        product.find().then((data) =>{
+            return res.status(200).json(data);
+        });
     },
     GetProductById:(req,res)=>{ // נקודת קצה עבור שליפת מוצר לפי מזהה מוצר
         
         let pid = req.params.id; // שמירת מזהה המוצר שנשלח
-        return res.status(200).json({msg:`Get Product id ${pid}`});
+        product.findOne({pid}).then((data) =>{
+            return res.status(200).json(data);
+        });
+    },
+    GetProductById:(req,res)=>{ // נקודת קצה עבור שליפת מוצר לפי מזהה מוצר
+        
+        let pid = req.params.id; // שמירת מזהה המוצר שנשלח
+        product.deleteOne({pid}).then((data) =>{
+            return res.status(200).json(data);
+        });
     },
     AddProduct:(req,res) =>{
-        const body = req.body;
-        return res.status(200).json({msg:"Added New Product", body});
+        let body = req.body;
+        product.insertMany([body]).then((data)=>{
+            return res.status(200).json(data);
+        });
     },
     UpdateProduct: (req,res)=>{ // נקודת קצה עבור עדכון מוצר לפי מזהה מוצר
-        let id =req.params.id;
-        let pid = req.params.id; // שמירת מזהה המוצר שנשלח
-        return res.status(200).json({msg:`Uptade Product ${id}` , body});
+        let pid =req.params.id;
+        let body = req.body; // שמירת מזהה המוצר שנשלח
+        product.updateMany({pid},[body]).then((data)=>{
+            return res.status(200).json(data);
+        });
     },
     DeleteProduct:  (req,res)=>{ // נקודת קצה עבור מחיקת מוצר לפי מזהה מוצר
         

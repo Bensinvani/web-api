@@ -1,8 +1,32 @@
+require('dotenv').config(); // טעינת קובץ ההגדרות למערכת
+
+const mongoose = require('mongoose') ; // חיבור לספריית העבודה מול מונגו
+
 const express = require('express'); // קישור לספריית אקספרס
 const app = express(); // יצירת יישום, מימוש של הספריה
 const productRouter = require('./api/v1/routes/product');
 const CategoryRouter = require('./api/v1/routes/category');
+
 const morgan = require('morgan'); // קישור לספרייה של מורגן 
+
+const ConnStr = process.env.MONGO_CONN; // שליפת מחרוזת ההתחברות מתוך הגדרות המערכת
+
+mongoose.connect(ConnStr).then((status) =>{
+    if(status)
+    {
+        console.log('Connected To Mongo Db');
+    }
+    else
+    {
+        console.log('Not Connected');
+    }
+});
+
+const productModel = require('./api/v1/models/product');
+productModel.find().then((data)=>{
+    console.log(data);
+});
+
 const arr = ['192.168.1.1','::1',"1.1.1.1"];
 app.use((req,res,next) =>{
     console.log(req.ip);
