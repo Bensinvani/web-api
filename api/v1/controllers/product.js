@@ -31,5 +31,5 @@ module.exports = {
         product.updateOne({pid},body).then((data)=>{
             return res.status(200).json(data);
         });
-    },
+    }
 };

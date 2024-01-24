@@ -6,7 +6,7 @@ const {GetAllProducts, // ייבוא סלקטיבי של הפונקציות המ
     GetProductById,
     AddProduct,
     UpdateProduct,
-    DeleteProduct,
+    RemoveProductById,
     RemoveProductById} = require('../controllers/product');
 router.get('/',GetAllProducts);
 router.post('/',AddProduct);

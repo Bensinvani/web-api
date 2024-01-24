@@ -1,20 +1,33 @@
+const Category = require('../models/category');
 module.exports = {
     GetAllCategory: (req,res)=>{ // הגדרת נקודת קצה עבור שליפה של כל המוצרים   
-        return res.status(200).json({msg:"All Categoris"});
+        Category.find().then((data)=>{
+            return res.status(200).json(data);
+        });
     },
     GetCategoryById: (req,res) =>{
         let Catid = req.params.id;
-        return res.status(200).json({msg:`Get Category Id ${Catid}`});
+        Category.find().then((data)=>{
+            return res.status(200).json(data);
+        });
     },
     Addcategory: (req,res) => {
-        return res.status(200).json({msg:"Added New Categoris"});
+        let body = req.body;
+        Category.insertMany([body]).then((data)=>{
+            return res.status(200).jason(data);
+        });
     },
     UpdateCategory: (req,res) =>{
         let Catid = req.params.id;
-        return res.status(200).json({msg:`Updated Category id ${Catid}`});
+        let body = req.body;
+        Category.updateOne({Catid},body).then((data)=>{
+            return res.status(200).json(data);
+        });
     },
-    DeleteCategory: (req,res)=>{ // נקודת קצה עבור מחיקת מוצר לפי מזהה מוצר
+    RemoveCategoryById: (req,res)=>{ // נקודת קצה עבור מחיקת מוצר לפי מזהה מוצר
         let Catid = req.params.id; // שמירת מזהה המוצר שנשלח
-        return res.status(200).json({msg:`Deleted Product id ${Catid}`});
+        Category.deleteOne({Catid}).then((data)=>{
+            return res.status(200).json(data);
+        });
     }
 };
