@@ -3,10 +3,9 @@ const Mongoose  = require('mongoose');
 
 const categorySchema = new Mongoose.Schema(
     {
-        cid:Number,
+        catid:Number,
         catname:String,
-        price:Number,
-        catname:String
+        catdesc:String
     });
 
-module.exports = mongoose.model('categoryies',categorySchema);
+module.exports = mongoose.model('category',categorySchema);
