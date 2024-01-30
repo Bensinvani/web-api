@@ -1,6 +1,7 @@
 require('dotenv').config(); // טעינת קובץ ההגדרות למערכת
 
 const mongoose = require('mongoose') ; // חיבור לספריית העבודה מול מונגו
+mongoose.pluralize(null);
 
 const express = require('express'); // קישור לספריית אקספרס
 const app = express(); // יצירת יישום, מימוש של הספריה
@@ -23,10 +24,6 @@ mongoose.connect(ConnStr).then((status) =>{
     }
 });
 
-const productModel = require('./api/v1/models/product');
-productModel.find().then((data)=>{
-    console.log(data);
-});
 
 const arr = ['192.168.1.1','::1',"1.1.1.1"];
 app.use((req,res,next) =>{

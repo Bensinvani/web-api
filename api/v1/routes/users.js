@@ -7,12 +7,16 @@ const {
     GetUsersById,
     AddUsers,
     UpdateUsers,
-    RemoveUsersById
+    RemoveUsersById,
+    Register,
+    Login
     } = require('../controllers/users');
 router.get('/',GetAllUsers);
 router.post('/',AddUsers);
 router.get('/:id',GetUsersById);
 router.patch('/:id',UpdateUsers);
 router.delete('/:id',RemoveUsersById);
+router.post('/register',Register); // נקודת קצה עבור הרשמה
+router.post('/login',Login);
 
 module.exports = router; // ייצוא של הראוטר

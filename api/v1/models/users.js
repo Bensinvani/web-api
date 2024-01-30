@@ -3,9 +3,9 @@ const mongoose = require('mongoose') ; // חיבור לספריית העבודה
 // נגדיר סכמה עבור מוצר
 const usersSchema = new mongoose.Schema(
     {
-        phone:Number,
+        phone:String,
         fullname:String,
-        pass:Number,
+        pass:String,
         email:String,
         userid:Number
     });

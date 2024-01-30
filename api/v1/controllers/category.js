@@ -7,15 +7,15 @@ module.exports = {
     },
     GetCategoryById:(req,res)=>{ // נקודת קצה עבור שליפת מוצר לפי מזהה מוצר
         
-        let cid = req.params.id; // שמירת מזהה המוצר שנשלח
-        category.findOne({cid}).then((data) =>{
+        let catid = req.params.id; // שמירת מזהה המוצר שנשלח
+        category.findOne({catid}).then((data) =>{
             return res.status(200).json(data);
         });
     },
     RemoveCategoryById:(req,res)=>{ 
         
-        let cid = req.params.id; 
-        category.deleteOne({cid}).then((data) =>{
+        let catid = req.params.id; 
+        category.deleteOne({catid}).then((data) =>{
             return res.status(200).json(data);
         });
     },
@@ -26,9 +26,9 @@ module.exports = {
         });
     },
     UpdateCategory: (req,res)=>{ // נקודת קצה עבור עדכון מוצר לפי מזהה מוצר
-        let cid =req.params.id;
+        let catid =req.params.id;
         let body = req.body; // שמירת מזהה המוצר שנשלח
-        category.updateOne({cid},body).then((data)=>{
+        category.updateOne({catid},body).then((data)=>{
             return res.status(200).json(data);
         });
     }

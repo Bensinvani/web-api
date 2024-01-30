@@ -1,4 +1,5 @@
-const Users = require('../models/users'); // חיבור למודל של המוצרים
+const Users = require('../models/users'); // חיבור למודל -מבנה הנתונים המייצג את המשתמשים
+const bcrypt = require('bcrypt'); // קישור לספריית ההצפנה
 module.exports = {
     GetAllUsers:(req,res)=>{ // הגדרת נקודת קצה עבור שליפה של כל המוצרים
         Users.find().then((data) =>{
@@ -30,6 +31,44 @@ module.exports = {
         let body = req.body; // שמירת מזהה המוצר שנשלח
         Users.updateOne({Usersid},body).then((data)=>{
             return res.status(200).json(data);
+        });
+    },
+    Register: (req,res)=>{
+        const {fullname,pass,email,phone,userid} = req.body; // שליפת השדות שנשלחו בבקשה
+        // נבדוק האם המשתמש כבר קיים במערכת
+        Users.find({email}).then((results) =>{
+            if(results.length > 0) // המשתמש קיים במערכת לא ניתן לבצע הרשמה 
+            {
+                return res.status(200).json({msg:"User already exists"});
+            }
+            // הצפנת סיסמה
+            bcrypt.hash(pass,10).then((hashpass)=>{
+
+                // שמירה בבסיס נתונים של המשתמש 
+                Users.insertMany({fullname,email,phone,userid,pass:hashpass}).then((results)=>{
+                    return res.status(200).json({results})
+                });
+            });
+        });
+    },
+    Login: (req,res)=>{
+        const {email,pass}=req.body;
+        Users.find({email}).then((results)=>{
+            if(results.length == 0) // במידה והמייל לא נמצא במערכת
+            {
+                return res.status(200).json({msg:"User Or Pass Are Worng"}); // מחזירים הודעת שגיאה
+            }
+            const hashpass = results[0].pass; // שליפת המחרוזת המוצפנת שהתקבלה מתוך בסיס הנתונים
+            bcrypt.compare(pass,hashpass).then((status)=>{
+                if(!status)
+                {
+                    return res.status(200).json({msg:"User Or Pass Are Worng"});
+                }
+                else
+                {
+                    return res.status(200).json({msg:"User Login successfully"});
+                }
+            });
         });
     }
 };
