@@ -3,6 +3,8 @@ require('dotenv').config(); // טעינת קובץ ההגדרות למערכת
 const mongoose = require('mongoose') ; // חיבור לספריית העבודה מול מונגו
 mongoose.pluralize(null);
 
+const jwt = require('jsonwebtoken'); // קישור לספרייה 
+
 const express = require('express'); // קישור לספריית אקספרס
 const app = express(); // יצירת יישום, מימוש של הספריה
 const productRouter = require('./api/v1/routes/product');
