@@ -12,6 +12,7 @@ const CategoryRouter = require('./api/v1/routes/category');
 const usersRouter = require('./api/v1/routes/users');
 
 const morgan = require('morgan'); // קישור לספרייה של מורגן 
+const auth = require('./auth');
 
 const ConnStr = process.env.MONGO_CONN; // שליפת מחרוזת ההתחברות מתוך הגדרות המערכת
 
@@ -26,6 +27,7 @@ mongoose.connect(ConnStr).then((status) =>{
     }
 });
 
+app.use(auth);
 
 const arr = ['192.168.1.1','::1',"1.1.1.1"];
 app.use((req,res,next) =>{
@@ -58,7 +60,7 @@ app.use(express.urlencoded()); // הוספת שכבה שמטפלת בבקשות 
 
 
 
-app.use('/product',productRouter); // קישור הראוטר אל האפליקציה
+app.use('/product',auth,productRouter); // קישור הראוטר אל האפליקציה
 app.use('/category',CategoryRouter); // קישור הראוטר של קטגוריות
 app.use('/users', usersRouter);
 app.all('*',(req,res)=>{ // הגדרת נקודת קצה עבור כתובת לא קיימת שגיאה 404
