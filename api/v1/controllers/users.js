@@ -1,5 +1,6 @@
 const Users = require('../models/users'); // חיבור למודל -מבנה הנתונים המייצג את המשתמשים
 const bcrypt = require('bcrypt'); // קישור לספריית ההצפנה
+const jwt = require('jsonwebtoken'); // חיבור לספריית jwt
 module.exports = {
     GetAllUsers:(req,res)=>{ // הגדרת נקודת קצה עבור שליפה של כל המוצרים
         Users.find().then((data) =>{
@@ -66,7 +67,9 @@ module.exports = {
                 }
                 else
                 {
-                    return res.status(200).json({msg:"User Login successfully"});
+                    const myUser = results[0];
+                    const token = jwt.sign({email,pass,fullname:myUser.fullname}, process.env.PRIVATE_KEY,{expiresIn:'1h'}); // יצירת טוקן התקף לשעה ומכיל בתוכו את פרטי המשתמש מוצפנים
+                    return res.status(200).json({msg:"User Login successfully",token});
                 }
             });
         });
