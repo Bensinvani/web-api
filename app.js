@@ -3,7 +3,9 @@ require('dotenv').config(); // טעינת קובץ ההגדרות למערכת
 const mongoose = require('mongoose') ; // חיבור לספריית העבודה מול מונגו
 mongoose.pluralize(null);
 
-const jwt = require('jsonwebtoken'); // קישור לספרייה 
+const jwt = require('jsonwebtoken'); // קישור לספרייה '
+const session = require('express-session');
+
 
 const express = require('express'); // קישור לספריית אקספרס
 const app = express(); // יצירת יישום, מימוש של הספריה
@@ -56,7 +58,14 @@ app.use(morgan('dev')); // הוספת שכבה שמבצעת לוג לכל הבק
 
 
 app.use(express.json()); // הוספת שכבה שמטפלת בבקשות שכוללות בודי בקידוד ג'ייסון
-app.use(express.urlencoded()); // הוספת שכבה שמטפלת בבקשות שכוללות בודי בקידוד urluncoded
+app.use(express.urlencoded({extended:true})); // הוספת שכבה שמטפלת בבקשות שכוללות בודי בקידוד urluncoded
+const twentyMin = 1000 * 60 * 20;
+app.use(session({
+    secret:'asadad',
+    resave:false,
+    saveUninitialized:true,
+    cookie:{maxAge:twentyMin}
+}));
 
 
 
