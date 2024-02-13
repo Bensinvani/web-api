@@ -21,6 +21,10 @@ module.exports = {
     },
     AddProduct:(req,res) =>{
         let body = req.body;
+        if(req.session.User == undefined)
+        {
+            return res.status(401).json({msg:"You Are Not autorized"});
+        }
         product.insertMany([body]).then((data)=>{
             return res.status(200).json(data);
         });

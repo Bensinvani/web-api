@@ -30,7 +30,6 @@ mongoose.connect(ConnStr + 'Ecom').then((status) =>{
     }
 });
 
-app.use(auth);
 
 const arr = ['192.168.1.1','::1',"1.1.1.1"];
 app.use((req,res,next) =>{
@@ -73,7 +72,8 @@ app.use(session({
 
 
 
-app.use('/product',auth,productRouter); // קישור הראוטר אל האפליקציה
+//app.use('/product',auth,productRouter); // קישור הראוטר אל האפליקציה
+app.use('/product',productRouter); // קישור הראוטר אל האפליקציה
 app.use('/category',CategoryRouter); // קישור הראוטר של קטגוריות
 app.use('/users', usersRouter);
 app.all('*',(req,res)=>{ // הגדרת נקודת קצה עבור כתובת לא קיימת שגיאה 404

@@ -69,6 +69,7 @@ module.exports = {
                 {
                     const myUser = results[0];
                     const token = jwt.sign({email,pass,fullname:myUser.fullname}, process.env.PRIVATE_KEY,{expiresIn:'1h'}); // יצירת טוקן התקף לשעה ומכיל בתוכו את פרטי המשתמש מוצפנים
+                    req.session.User = token;
                     return res.status(200).json({msg:"User Login successfully",token});
                 }
             });
