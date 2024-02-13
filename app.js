@@ -5,6 +5,7 @@ mongoose.pluralize(null);
 
 const jwt = require('jsonwebtoken'); // קישור לספרייה '
 const session = require('express-session');
+const MongoStore = require('connect-mongo');
 
 
 const express = require('express'); // קישור לספריית אקספרס
@@ -18,7 +19,7 @@ const auth = require('./auth');
 
 const ConnStr = process.env.MONGO_CONN; // שליפת מחרוזת ההתחברות מתוך הגדרות המערכת
 
-mongoose.connect(ConnStr).then((status) =>{
+mongoose.connect(ConnStr + 'Ecom').then((status) =>{
     if(status)
     {
         console.log('Connected To Mongo Db');
@@ -61,10 +62,13 @@ app.use(express.json()); // הוספת שכבה שמטפלת בבקשות שכו
 app.use(express.urlencoded({extended:true})); // הוספת שכבה שמטפלת בבקשות שכוללות בודי בקידוד urluncoded
 const twentyMin = 1000 * 60 * 20;
 app.use(session({
-    secret:'asadad',
+    secret:'bensinvani2024',
     resave:false,
     saveUninitialized:true,
-    cookie:{maxAge:twentyMin}
+    cookie:{maxAge:twentyMin},
+    store:MongoStore.create({
+        mongoUrl:ConnStr + 'SessionDb'
+    })
 }));
 
 
