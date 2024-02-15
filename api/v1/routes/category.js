@@ -1,6 +1,7 @@
 
 const express = require('express');
 const router = express.Router();
+const authSession = require('../../../authSession');
 
 const {
     GetAllCategory,
@@ -11,9 +12,9 @@ const {
 } = require('../controllers/category');
 
 router.get('/', GetAllCategory);
-router.post('/',Addcategory);
+router.post('/',authSession,Addcategory);
 router.get('/:id',GetCategoryById);
-router.patch('/:id',UpdateCategory);
-router.delete('/:id',RemoveCategoryById);
+router.patch('/:id',authSession,UpdateCategory);
+router.delete('/:id',authSession,RemoveCategoryById);
 
 module.exports = router;
