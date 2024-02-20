@@ -7,6 +7,19 @@ const jwt = require('jsonwebtoken'); // קישור לספרייה '
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 
+const mysql = require('mysql');
+const connection = mysql.createConnection({
+  host     : 'localhost', // שם השרת
+  user     : 'root', // שם המשתמש 
+  password : 'Bensin123', // סיסמה 
+  database : 'ecom' // שם בסיס הנתונים
+});
+ 
+connection.connect(()=>{
+    console.log('connected to MySql');
+});
+global.db = connection // יצירת משתנה גלובלי בשם דיבי שמחזיק את הקונקשן
+
 
 const express = require('express'); // קישור לספריית אקספרס
 const app = express(); // יצירת יישום, מימוש של הספריה
@@ -29,31 +42,7 @@ mongoose.connect(ConnStr + 'Ecom').then((status) =>{
         console.log('Not Connected');
     }
 });
-
-
-const arr = ['192.168.1.1','::1',"1.1.1.1"];
-app.use((req,res,next) =>{
-    console.log(req.ip);
-    let i;
-    for(i = 0; i < arr.length; i++) // עבור כל כתובות האייפי המורשות 
-    {
-        if(req.ip == arr[i]) // במידה וכתובת האייפי של מבקש הבקשה, נמצאה בתוך רשימת המורשים
-        {
-            break;
-        }
-        
-    }
-    if(i == arr.length)
-    {
-        return res.status(403).json({msg:'not autorized'});
-    }
-    else 
-    {
-        next();
-    }
-        
-
-}); 
+ 
 app.use(morgan('dev')); // הוספת שכבה שמבצעת לוג לכל הבקשות שהתקבלו 
 
 

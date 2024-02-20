@@ -10,9 +10,10 @@ const {GetAllProducts, // ייבוא סלקטיבי של הפונקציות המ
     RemoveProductById
     } = require('../controllers/product');
 router.get('/',GetAllProducts);
-router.post('/',auth,AddProduct);
+router.post('/',AddProduct);
 router.get('/:id',GetProductById);
-router.patch('/:id',auth,UpdateProduct);
-router.delete('/:id',auth,RemoveProductById);
+router.patch('/:id',UpdateProduct);
+router.delete('/:id',RemoveProductById);
+//router.delete('/:id',auth,RemoveProductById);
 
 module.exports = router; // ייצוא של הראוטר
